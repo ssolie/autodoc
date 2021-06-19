@@ -30,7 +30,7 @@ import re
 import getopt
 
 # Embedded version string.
-verstag = '$VER: autodoc.py 54.1 (25.1.2021)'
+verstag = '$VER: autodoc.py 54.2 (18.6.2021)'
 
 # All output goes to outfile.
 #
@@ -192,11 +192,19 @@ class autodoclist:
 					head_span = head_match.span()
 					content = content[head_span[1]:]
 
+					# Exclusion filters
 					if args['i'] and type != 'i':
 						continue
 
 					if args['o'] and type != 'o':
 						continue
+
+					# Inclusion filters
+					if args['i'] and type == 'i':
+						inside_autodoc = True
+
+					if args['o'] and type == 'o':
+						inside_autodoc = True
 
 					if args['u'] and type == 'f':
 						inside_autodoc = True
